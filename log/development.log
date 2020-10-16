@@ -1,0 +1,8 @@
+
+
+Processing HomeController#index (for 180.166.22.231 at 2020-10-16 16:12:38) [GET]
+
+ActionController::UnknownAction (No action responded to index. Actions: ):
+  
+
+Rendering rescues/layout (not_found)

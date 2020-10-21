@@ -55,7 +55,7 @@
         }
       }
     </script-->
-        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/stylesheets/jquery-ui-1.12.1.css">
         <!--link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css"-->
         <style>
             body {
@@ -69,8 +69,113 @@
             .ui-draggable, .ui-droppable {
             	background-position: top;
             }
+            
+            #tabs {
+                height:100%; width:100%;/*margin:100px 100px 100px 20px;*/
+            }
             </style>
         <script src="/javascripts/jquery-1.12.4.js"></script>
         <script src="/javascripts/jquery-ui-1.12.1.js"></script>
 
   </head>
+
+  <body style="height:100%; width:100%; margin:0; padding:0;">
+      
+<div id="tabs" style="border:0px solid green;">
+  <ul>
+    <li><a href="#tabs-1">CPP2Ruby</a></li>
+    <li><a href="#tabs-2">Abap2Ruby</a></li>
+  </ul>
+  <center>
+ <div id="container" style="border:0px solid red;">
+  <div id="tabs-1" style="height:2000px;">
+    <div style="width:800px;text-align:left;">
+        <div style="clear:both">
+            CPP Code:<br/>
+            <textarea id="cppcode" style="width:800px;height:600px;">
+            </textarea>
+        </div>
+        <div style="float:right;">
+            <button style="font-size:18pt;">convert to Ruby</button>
+        </div>
+        <div style="clear:both">
+            Ruby Code:<br/>
+            <textarea id="rubycode"  style="width:800px;height:600px;">
+            </textarea>
+        </div>
+    </div>
+  </div>
+  <div id="tabs-2">
+    
+    <div style="width:800px;text-align:left;">
+        <div style="clear:both">
+            Abap Code:<br/>
+            <textarea id="abapcode" style="width:800px;height:600px;">
+            </textarea>
+        </div>
+        <div style="float:right;">
+            <button style="font-size:18pt;" onclick="abap2ruby();">convert to Ruby</button>
+        </div>
+        <div style="clear:both">
+            Ruby Code:<br/>
+            <textarea id="rubycode"  style="width:800px;height:600px;">
+            </textarea>
+        </div>
+    </div>
+   
+  </div>
+</div><!-- container -->
+</center>
+</div><!-- tabs -->
+ 
+  </body>
+  
+      <script>
+      function showWaiting(show){
+      	if (show)
+      		$("#waitingbg").css("display", "block");
+      	else
+      		$("#waitingbg").css("display", "none");	
+      }
+   
+      </script>
+  </div>
+  <div id="waitingbgfound" style="display:none;z-index:1000;position:absolute;left:0;top:0;width:100%;height:100%;">
+      <center>
+      	<img src="/images/spark1.gif" style="width:50px;margin-top:170px;margin-left:-125px;"/>
+          
+      </center>
+  </div>
+</html>
+  <script>
+      function abap2ruby(){
+          code = $("#abapcode").val();
+          alert(code);
+              url_path="/home/abap2ruby";
+          	$.ajax({
+          			type: "post",
+          			url: url_path,
+          			data: {
+          				code:code,
+          				authenticity_token:window._token
+          			}, 
+          			dataType: 'json',
+          			success: function(data, textStatus){
+          				// showWaiting(false);
+          				   alert( "Data Saved: " + data +","+ textStatus);
+
+	
+          		           showWaiting(false);
+          			},
+          			error: function(xhr, textStatus, errorThrow){
+          				// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+          				showWaiting(false);
+          				alert("<div>你觉得哪里有什么不对，可是又说不上来</div>");
+          			}
+      	});
+  
+    }
+$( function() {
+  $( "#tabs" ).tabs();
+} );
+      </script>

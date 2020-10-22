@@ -149,7 +149,7 @@
 </html>
   <script>
       function abap2ruby(){
-          code = $("#abapcode").val();
+          code = $("#abapcode").val().trim();
           alert(code);
               url_path="/home/abap2ruby";
           	$.ajax({
@@ -159,7 +159,7 @@
           				code:code,
           				authenticity_token:window._token
           			}, 
-          			dataType: 'json',
+          			//dataType: 'json',
           			success: function(data, textStatus){
           				// showWaiting(false);
           				   alert( "Data Saved: " + data +","+ textStatus);
